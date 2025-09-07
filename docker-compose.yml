@@ -1,0 +1,17 @@
+services:
+  # Nome do serviço. Use um nome descritivo para a sua API.
+  test-api:
+    # A instrução 'build' informa ao Docker Compose para construir a imagem
+    # usando o Dockerfile no diretório atual (o ponto '.').
+    build: .
+    
+    # Mapeia a porta do host para a porta do container.
+    ports:
+      - "5000:5000"
+      
+    # Mapeia o diretório de trabalho do computador para o do container.
+    # Isso é útil para desenvolvimento, pois qualquer alteração no código
+    # do seu host será refletida instantaneamente no container.
+    # Isso evita a necessidade de reconstruir a imagem toda hora.
+    volumes:
+      - .:/app
