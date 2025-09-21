@@ -5,8 +5,13 @@ import random
 import pandasql as psql
 import psycopg2
 import os
+import time
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
+
+# Habilita métricas do Prometheus
+metrics = PrometheusMetrics(app)
 
 # Lê a URL de conexão do ambiente (docker-compose.yml)
 DATABASE_URL = os.environ.get('DATABASE_URL')
@@ -169,3 +174,7 @@ def home():
         'mensagem': 'API online com sucesso!',
         'status': 'ok'
     })
+
+@app.route('/ping')
+def ping():
+    return "pong"

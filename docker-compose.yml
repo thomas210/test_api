@@ -1,8 +1,9 @@
 services:
   # Serviço da sua API
-  app:
+  flask-app:
     # build: .
     build: .
+    container_name: flask-app
     ports:
       - "5000:5000"
     volumes:
@@ -30,6 +31,23 @@ services:
     # Assim, os dados não são perdidos quando o container é reiniciado
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 
 # Definição dos volumes para persistência de dados
 volumes:
